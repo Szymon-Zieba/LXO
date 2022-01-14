@@ -1,0 +1,46 @@
+
+<body >
+    <main>
+        <form class="register" action="/register" method="POST">
+            <div class="section-background"> 
+                <div class="form__group field">
+                    <input  required class="form__field " type="text" id="name" placeholder="Imie" name="name" autocomplete="off">
+                    <label for="name" class="form__label mb-20">Imię</label>
+                
+                <div class="form__group field"> 
+                    <input required class="form__field " type="text" id="lastName"  placeholder="Nazwisko" name="lastName" autocomplete="off">              
+                    <label for="name" class="form__label mb-20 ">Nazwisko</label>
+                </div>  
+                <div class="form__group field"> 
+                    <input required class="form__field " type="email" id="email" placeholder="Email"  name="email" autocomplete="off">         
+                    <label for="name" class="form__label mb-20">Email</label>
+                </div>
+                <div class="form__group field">       
+                    <input required class="form__field "  type="password" id="password" placeholder="Hasło"  name="password" autocomplete="off">
+                    <label for="name" class="form__label mb-20">Hasło</label>
+                </div>  
+                <div class="form__group field"> 
+                    <input required class="form__field " type="text" id="adress" placeholder="Adres"  name="adress" autocomplete="off">  
+                    <label for="name" class="form__label mb-20">Adress</label>
+                </div>  
+                <div class="form__group field mb-100"> 
+                    <input required class="form__field " title = "Wpisz 9 cyfr!" pattern="^[0-9\-\+]{9,15}$"   type="text" placeholder="Nr Telefonu" maxlength="9" size="9" name="phone_number" autocomplete="off"> 
+                    <label for="name" class="form__label ">Nr telefonu</label>
+                </div>  
+            
+                    
+                <% if(error){ %>
+                    <div class="section-login__input-error mb-100">
+                        <h1 class="section-login__input-error-h1 ">
+                            <%=error%>
+                        </h1>
+                    </div>    
+                <%} %>  
+
+                <div class="section-login__input-button">                           
+                    <button class="btn btn--white" type="submit">Rejestracja</button>
+                </div>
+            </div>
+        </form> 
+    </main>
+</body>

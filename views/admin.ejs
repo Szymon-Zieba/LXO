@@ -1,0 +1,30 @@
+
+<body>
+    <main>
+        <header class="header_login">
+            
+                <a class="header-home" href="/">HOME</a></li>
+
+            <section class="login-nav">
+                <form method="POST" action="/admin">
+                <div class="login-menu">
+                    <% if(error){ %> 
+                        <div>
+                            <%=error%> 
+                        </div>                       
+                    <%} %>
+                    <input class="login-menu__input" type="email" placeholder="Email" name="email" autocomplete="off">  
+                    <input class="login-menu__input" type="password" placeholder="Hasło" name="password" autocomplete="off"> 
+                    </br>
+                    </br>
+                    </br>
+                    <button class="login-menu__button " type="submit" style="display: inline-block;">Zaloguj</button> 
+                    </br>
+                    </br>
+                    <a class="login-admin-a">LOGOWANIE ADMINISTRATORA</a>
+                </div>
+                </form>
+            </section>
+        </header>
+    </main>
+</body>

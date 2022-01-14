@@ -1,0 +1,38 @@
+
+        
+<body >
+    <main>
+        <%- include('elements/header'); -%>
+            <section class="section-aboutus" id="section-aboutus">
+                <div class="u-center-text u-margin-bottom-big mt-70">
+                    <h2 class="heading-secondary">
+                        Znajdź to czego potrzebujesz
+                    </h2>
+                </div>
+                
+                
+                    <div class="row ">
+                        <% getType.forEach(function(type) { %>
+                        <div class="col-1-of-4 mb-20">
+                            <div class="section-aboutus-box"> 
+                                <div class="section-aboutus-box-img">
+                                    <a class="" href="#" > 
+                                         <img src="/img/<%=type.img_source%>" alt="Picture of type" class="composition__photo composition__photo--p1" href="#">
+                                    </a>    
+                                </div>
+                                
+                                <div class="section-aboutus-box-text" >
+                                    <a class="heading-tertiary btn-text" href="#"> 
+                                           <span class=""><%=type.name%></span>
+                                   </a> 
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>  
+                    </div>
+                
+            </section>
+            
+        <%- include('elements/footer'); -%>    
+    </main>
+</body>

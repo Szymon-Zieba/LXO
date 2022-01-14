@@ -1,0 +1,19 @@
+
+function getPost(id){
+    return execute(`CALL getPost('${id}')`)
+}
+
+function addPost(id_types, pubHouse, author, title, date_publishment, price, isPreorder, players, agePlayers){
+    return execute(`CALL addGame('${id_types}', '${pubHouse}', '${author}', '${title}', '${date_publishment}', '${price}', '${isPreorder}', '${players}', '${agePlayers}')`)
+}
+
+function removePost(id){
+    return execute(`CALL removeGame('${id}')`)
+}
+
+function editPost(id, id_types, pubHouse, author, title, date_publishment, price, isPreorder, players, agePlayers){
+    return execute(`CALL editGame('${id}', '${id_types}', '${pubHouse}', '${author}', '${title}', '${date_publishment}', '${price}', '${isPreorder}', '${players}', '${agePlayers}')`)
+}
+
+
+

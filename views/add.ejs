@@ -1,0 +1,54 @@
+<body>
+    <main>
+        <%- include('elements/header'); -%>
+
+        <section class="section-aboutus mb-10" id="section-aboutus">
+        <form class="add" action="/add" method="POST">
+            <div class="section-background"> 
+                <div class="row">
+                    <div class="col-2-of-3 mb-20"> 
+                        <div class="form__group field">
+                            <input  required class="form__field " type="text" id="title" placeholder="Tytuł" name="title" autocomplete="off">
+                            <label for="title" class="form__label mb-20">Tytuł Ogłoszenia</label>
+                        </div>  
+                        
+                        <div class="form__group field"> 
+                            <input required class="form__field " type="number" step="any" id="price"  placeholder="Cena" name="price" autocomplete="off">              
+                            <label for="price" class="form__label mb-20 ">Cena</label>
+                        </div>  
+                        <div class="form__group field">       
+                            <input required class="form__field "  type="text" id="description" placeholder="Opis"  name="description" autocomplete="off">
+                            <label for="description" class="form__label mb-20">Opis</label>
+                        </div>  
+                        <div class="form__group field"> 
+                            <input required class="form__field " type="text" id="city" placeholder="Miasto"  name="city" autocomplete="off">         
+                            <label for="city" class="form__label mb-20">Miasto</label>
+                        </div>            
+                    </div>     
+        
+                        
+                    
+                </div>
+                
+                <div class="form">
+                    <div class="form__group field">
+                        <select size="4" required class="form__field " id="type" placeholder="Gatunek" name="type" >
+                        <label for="title" class="form__label mb-70">Gatunek</label>
+                            <option value="motoryzacja">Motoryzacja</option>
+                            <option value="praca">Praca</option>
+                            <option value="muzyka">Muzyka</option>
+                            <option value="gry">Gry</option>
+                            <option value="sport">Sport</option>
+                    </div>
+                        
+                    <div class="section-login__input-button">                           
+                        <a class="btn btn--white"><button action="POST"  type="submit">Rejestracja</button></a>
+                    </div>
+                </div>
+            </div>
+        </form> 
+        </section>
+                    
+        <%- include('elements/footer'); -%>    
+    </main>
+</body>
