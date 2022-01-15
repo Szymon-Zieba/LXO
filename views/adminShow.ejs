@@ -11,17 +11,20 @@
                       <tr class ="panelAdmin-tr"></tr>
                       <tr class ="panelAdmin-tr">
                           <td class ="panelAdmin-text">
+                              <a class="panelAdmin-a">Tytuł</a>
+                          </td>
+                          <td class ="panelAdmin-text">
                               <a class="panelAdmin-a">Typ</a>
                           </td>
                           <td class ="panelAdmin-text">
                               <a class="panelAdmin-a">Opis</a>
                           </td>
                           <td class ="panelAdmin-text">
-                              <a class="panelAdmin-a">Zdjecie</a>
-                          </td>
-                          <td class ="panelAdmin-text">
                               <a class="panelAdmin-a">Cena</a>
                           </td>
+                          <td class ="panelAdmin-text">
+                            <a class="panelAdmin-a">Zdjęcie</a>
+                        </td>
                       </tr>
                   <% product.forEach(function(product) { %>
                       <tr class="panelAdmin-tr product-tr">
@@ -34,7 +37,7 @@
                                 </a>
                             </td>
                             <td contenteditable='true' class="panelAdmin-td-register">
-                                    <a class ="panelAdmin-a-register">Typ :
+                                    <a class ="panelAdmin-a-register">
                                         <select class="panelAdmin-input-register" name="id_types" value="<%=product.id_types%>">
                                             <option></option>
                                             <% types.forEach(function(type){ %>
@@ -46,19 +49,26 @@
                                     </a>
                                 </td>
                             <td contenteditable='true' class ="panelAdmin-text">
-                                <a class="panelAdmin-a" name = "description"><%=product.description%></a>
+                                <a class="panelAdmin-a" name = "description">
+                                    <input class="panelAdmin-input-register" name = "title" value="<%=product.description%>"/>
+                                </a>
+                                
                             </td>
                             <td contenteditable='true' class ="panelAdmin-text">
-                                <a class="panelAdmin-a" name = "price"><%=product.price%></a>
+                                <a class="panelAdmin-a" name = "price">
+                                    <input class="panelAdmin-input-register" type="number" name = "title" value="<%=product.price%>"/>
+                                </a>
                             </td>
                             <td contenteditable='true' class ="panelAdmin-text">
-                                <a class="panelAdmin-a" type="file" name="img_src"><%=product.img_src%></a>
+                                <a class="panelAdmin-a" name="img_src">
+                                    <input class="panelAdmin-input-register" type="file" name = "title" value="<%=product.img_src%>"/>
+                                </a>
                             </td>
                             <td class ="panelAdmin-text">
                                     <button type="button" onclick="remove(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Usuń</button>
                             </td>
                             <td class ="panelAdmin-text">
-                                    <button type="button" onclick="edit(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Edytuj</button>
+                                    <button class="panelAdmin-button" type="submit" id="edit-btn" >Edytuj</button>
                             </td>
                         </form>
                     </tr>
@@ -107,7 +117,6 @@
                             </td>
                             <td class="panelAdmin-td-register ">
                                 <button type="submit" id="add-btn" class="panelAdmin-button mt-20"><%if(saving.id) { %>Edytuj<%}else{%>Dodaj<%}%></button>
-                                <a href="/adminShow"><button class="panelAdmin-button mt-20">Wyczyść</button></a>
                             </td>
                         </tr>
                     </table>   

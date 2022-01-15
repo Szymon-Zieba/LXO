@@ -147,34 +147,53 @@ router.post(
   upload.single("img_src"),
   auth,
   async (req, res, next) => {
-    const { id_types, title, description, price } = req.body;
+    const { id, id_types, title, description, price } = req.body;
     const id_clients = "" + req.user.id;
     const date_publishment = new Date().toISOString();
 
+    // CHECK IF FILE
     if (!req.file) {
       res.status(500).send("No file upload");
     } else {
       const img_src = req.file.filename;
 
+      //  CHECK IF PHOTO FORMAT
       if (!whitelist.includes(req.file.mimetype)) {
         res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
       } else {
-        try {
-          await db.addPost(
-            id_clients,
-            id_types,
-            title,
-            description,
-            img_src,
-            price,
-            date_publishment
-          );
-          res.redirect("/adminShow");
-        } catch (error) {
-          console.error(error);
-          res.status(500).send("error");
+        // CHECK IF ADD OR EDIT
+
+        //ADD
+        if (!id) {
+          try {
+            await db.addPost(
+              id_clients,
+              id_types,
+              title,
+              description,
+              img_src,
+              price,
+              date_publishment
+            );
+            res.redirect("/adminShow");
+          } catch (error) {
+            console.error(error);
+            res.status(500).send("error");
+          }
+          console.log("ADD CORECTLY");
         }
-        console.log("New product added corectly");
+
+        //EDIT
+        else {
+          try {
+            await db.editPost(id_types, title, description, img_src, price);
+            res.redirect("/adminShow");
+          } catch (error) {
+            console.error(error);
+            res.status(500).send("error");
+          }
+          console.log("EDIT CORECTLY");
+        }
       }
     }
   }
