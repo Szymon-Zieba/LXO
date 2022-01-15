@@ -7,7 +7,6 @@
         <section class="panel-main">
             
                 <div class="panel-whole">
-                <form method="POST" action="/adminShow">
                   <table class="panelAdmin">
                       <tr class ="panelAdmin-tr"></tr>
                       <tr class ="panelAdmin-tr">
@@ -26,48 +25,50 @@
                       </tr>
                   <% product.forEach(function(product) { %>
                       <tr class="panelAdmin-tr product-tr">
-                        <input name="id_product" type="hidden" value="<%=product.id%>"/>
-                        <input name="id_product" type="hidden" value="<%=product.id_clients%>"/>
-                          <td contenteditable='true' class ="panelAdmin-text">
-                              <a class="panelAdmin-a" name = "title">
-                                <input class="panelAdmin-input-register" name = "title" value="<%=product.title%>"/>
-                              </a>
-                          </td>
-                          <td contenteditable='true' class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Typ :
-                                    <select class="panelAdmin-input-register" name="id_types" value="<%=product.id_types%>">
-                                        <option></option>
-                                        <% types.forEach(function(type){ %>
-                                        
-                                        <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>      
-                                        <% }) %>
-                                    </select>
-                                    
+                        <form action="/adminShow" method="POST" enctype="multipart/form-data">
+                            <input name="id_product" type="hidden" value="<%=product.id%>"/>
+                            <input name="id_product" type="hidden" value="<%=product.id_clients%>"/>
+                            <td contenteditable='true' class ="panelAdmin-text">
+                                <a class="panelAdmin-a" name = "title">
+                                    <input class="panelAdmin-input-register" name = "title" value="<%=product.title%>"/>
                                 </a>
                             </td>
-                          <td contenteditable='true' class ="panelAdmin-text">
-                              <a class="panelAdmin-a" name = "description"><%=product.description%></a>
-                          </td>
-                          <td contenteditable='true' class ="panelAdmin-text">
-                            <a class="panelAdmin-a" name = "price"><%=product.price%></a>
-                        </td>
-                          <td contenteditable='true' class ="panelAdmin-text">
-                              <a class="panelAdmin-a" type="file" name="img_src"><%=product.img_src%></a>
-                          </td>
-                          <td class ="panelAdmin-text">
-                                  <button type="button" onclick="remove(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Usuń</button>
-                          </td>
-                          <td class ="panelAdmin-text">
-                                <button type="button" onclick="edit(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Edytuj</button>
-                          </td>
-                      </tr>
+                            <td contenteditable='true' class="panelAdmin-td-register">
+                                    <a class ="panelAdmin-a-register">Typ :
+                                        <select class="panelAdmin-input-register" name="id_types" value="<%=product.id_types%>">
+                                            <option></option>
+                                            <% types.forEach(function(type){ %>
+                                            
+                                            <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>      
+                                            <% }) %>
+                                        </select>
+                                        
+                                    </a>
+                                </td>
+                            <td contenteditable='true' class ="panelAdmin-text">
+                                <a class="panelAdmin-a" name = "description"><%=product.description%></a>
+                            </td>
+                            <td contenteditable='true' class ="panelAdmin-text">
+                                <a class="panelAdmin-a" name = "price"><%=product.price%></a>
+                            </td>
+                            <td contenteditable='true' class ="panelAdmin-text">
+                                <a class="panelAdmin-a" type="file" name="img_src"><%=product.img_src%></a>
+                            </td>
+                            <td class ="panelAdmin-text">
+                                    <button type="button" onclick="remove(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Usuń</button>
+                            </td>
+                            <td class ="panelAdmin-text">
+                                    <button type="button" onclick="edit(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Edytuj</button>
+                            </td>
+                        </form>
+                    </tr>
+
                     
                     <% }) %>
-                  </div>
-              </form>    
+                  </div>  
 
             <div class="panelAdmin-insert">
-                <form method="post" action="/adminShow">
+                <form method="POST" action="/adminShow" enctype="multipart/form-data">
                     <input name="id_product" type="hidden" value="<%=saving.id%>"/>
                     <table class="panelAdmin">
                         <tr class="panelAdmin-tr-register">
@@ -121,25 +122,6 @@
         function remove(element) {
             const id = element.getAttribute('data-id');
             fetch(`/adminShow/${id}`, {method:'DELETE' })
-            .then(response => response.statusText === 'OK' ? window.location.reload() : null);
-        }
-
-        function edit(element) {
-            const id = element.getAttribute('data-id');
-            const row = element.closest('.product-tr');
-            const title = row.querySelector('input[name="title"]')?.value;
-            const id_types = row.querySelector('select[name="id_types"]')?.value;
-            const description = row.querySelector('select[name="description"]')?.value;
-            const price = row.querySelector('select[name="price"]')?.value;
-            // zdjecia
-            fetch(`/adminShow/${id}`, 
-                {
-                    method:'PUT', 
-                    headers: {
-                        'Content-Type': 'application/json'
-                        },
-                    body: JSON.stringify({title, id_types, description, price})
-                })
             .then(response => response.statusText === 'OK' ? window.location.reload() : null);
         }
     </script>
