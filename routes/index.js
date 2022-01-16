@@ -8,9 +8,13 @@ const emailRegexp =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const bcrypt = require("bcrypt");
 const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
-const upload = multer({ dest: "public/img/upload" });
+const upload = multer({ dest: "public/img/tmp" });
 const whitelist = ["image/png", "image/jpeg", "image/jpg"];
+const tmpDir = path.join(__dirname + "/../public/img/tmp/");
+const uploadDir = path.join(__dirname + "/../public/img/upload/");
 
 function auth(req, res, next) {
   if (req.cookies.token) {
@@ -155,12 +159,14 @@ router.post(
     if (!req.file) {
       res.status(500).send("No file upload");
     } else {
-      const img_src = req.file.filename;
-
       //  CHECK IF PHOTO FORMAT
       if (!whitelist.includes(req.file.mimetype)) {
         res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
       } else {
+        const img_src =
+          req.file.filename + "." + req.file.mimetype.split("/")[1];
+        fs.copyFileSync(tmpDir + req.file.filename, uploadDir + img_src);
+        fs.unlinkSync(tmpDir + req.file.filename);
         // CHECK IF ADD OR EDIT
 
         //ADD
@@ -225,6 +231,18 @@ router.put("/adminShow/:id", auth, onlyFor("admin"), async (req, res, next) => {
     console.error(error);
     res.status(500).send("das");
   }
+});
+
+router.get("/products", auth, async (req, res, next) => {
+  const [products] = await db.getPosts();
+  res.render("products", { products, logged: !!req.user });
+});
+
+router.get("/gra/:id", auth, async (req, res, next) => {
+  const { id } = req.params;
+  const [products] = await db.getGame(id);
+  const product = products ? products[0] : {};
+  res.render("object", { product, logged: !!req.user });
 });
 
 module.exports = router;

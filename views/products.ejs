@@ -1,0 +1,52 @@
+<body>
+  <main>
+    <%- include('elements/header'); -%>
+    <section class="section-games" id="section-games">
+      <div class="u-center-text u-margin-bottom-big">
+        <h2 class="heading-secondary">OGŁOSZENIA</h2>
+      </div>
+
+      <div class="row mt-70">
+        <% products.forEach(function(products) { %>
+        <div class="col-1-of-4 mb-130">
+          <div class="card">
+            <div class="card__side card__side--front">
+              <div class="card__picture">
+                <a class="">
+                  <img
+                    src="/img/upload/<%=products.img_src%>"
+                    alt="Picture Of Game"
+                    class="card__picture"
+                /></a>
+                &nbsp;
+              </div>
+              <h4 class="card__heading">
+                <span class="card__heading-span card__heading-span--3"
+                  ><%=products.title%></span
+                >
+              </h4>
+              <div class="card__details">
+                <ul>
+                  <li><%=products.description%></li>
+                </ul>
+              </div>
+            </div>
+            <div class="card__side card__side--back card__side--back-3">
+              <div class="card__cta">
+                <div class="card__price-box">
+                  <p class="card__price-only">Już teraz tylko</p>
+                  <p class="card__price-value"><%=products.price%> zł</p>
+                </div>
+                <a href="/gra/<%=products.id_product%>" class="btn btn--white"
+                  >Kup teraz</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+    <%- include('elements/footer'); -%>
+  </main>
+</body>
