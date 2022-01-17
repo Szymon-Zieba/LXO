@@ -1,7 +1,7 @@
 var express = require("express");
 var db = require("../db");
 var router = express.Router();
-var jwt = require("jwt-simple");
+var jwt = require("jsonwebtoken");
 var secret = "%#$@*(%#@*)%&#@*%&_)(@*#&^)(_";
 const { createConnection } = require("mysql");
 const emailRegexp =
@@ -11,17 +11,40 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
+const tokens = {};
 const upload = multer({ dest: "public/img/tmp" });
 const whitelist = ["image/png", "image/jpeg", "image/jpg"];
 const tmpDir = path.join(__dirname + "/../public/img/tmp/");
 const uploadDir = path.join(__dirname + "/../public/img/upload/");
+const config = require("../config.json");
 
 function auth(req, res, next) {
-  if (req.cookies.token) {
-    const decode = jwt.decode(req.cookies.token, secret);
-    if (decode) {
-      req.user = decode;
-    }
+  const { token, refresh } = req.cookies;
+
+  if (token) {
+    jwt.verify(token, config.secret, function (err, decoded) {
+      if (err) {
+        // wygasnienice tokenu
+        if (tokens[refresh]) {
+          jwt.verify(
+            refresh,
+            config.refreshTokenSecret,
+            function (err, decoded) {
+              if (err) {
+                return res.status(401).send("Unauthorized access.");
+              }
+              const token = jwt.sign(userData, config.secret, {
+                expiresIn: config.tokenLife,
+              });
+              res.cookie("token", token, { httpOnly: true, secure: true });
+              req.user = decoded;
+            }
+          );
+        }
+      } else {
+        req.user = decoded;
+      }
+    });
   }
   next();
 }
@@ -39,17 +62,12 @@ function onlyFor(role) {
 /* GET home page. */
 
 router.get("/", auth, async (req, res, next) => {
-  const [getType] = await db.getType();
-  res.render("index", { getType, logged: !!req.user });
+  const [getTypes] = await db.getTypes();
+  res.render("index", { getTypes, logged: !!req.user });
 });
 
 router.get("/about", auth, async (req, res, next) => {
   res.render("about", { logged: !!req.user });
-});
-
-router.get("/product", auth, async (req, res, next) => {
-  const [product] = await db.getProduct();
-  res.render("product", { product, logged: !!req.user });
 });
 
 router.get("/register", auth, function (req, res, next) {
@@ -69,11 +87,19 @@ router.post("/login", auth, async (req, res, next) => {
   const [result] = await db.loginClient(email, password);
   if (result.length) {
     const user = result[0];
-    const token = jwt.encode(
-      { email: user.email, role: "user", id: user.id_clients },
-      secret
-    );
+    const userData = { email: user.email, role: "user", id: user.id_clients };
+    const token = jwt.sign(userData, config.secret, {
+      expiresIn: config.tokenLife,
+    });
     res.cookie("token", token, { httpOnly: true, secure: true });
+    const refreshToken = jwt.sign(userData, config.refreshTokenSecret, {
+      expiresIn: config.refreshTokenLife,
+    });
+    tokens[refreshToken] = true;
+    res.cookie("refresh", refreshToken, {
+      httpOnly: true,
+      secure: true,
+    });
     res.redirect("/");
   } else {
     res.render("login", { error: "Zły login lub hasło" });
@@ -112,7 +138,9 @@ router.get("/add", auth, function (req, res, next) {
 });
 
 router.post("/logout", auth, function (req, res, next) {
+  delete tokens[req.cookies.refresh];
   res.clearCookie("token");
+  res.clearCookie("refresh");
   res.send({});
 });
 
@@ -139,7 +167,7 @@ router.post("/admin", auth, async (req, res, next) => {
 router.get("/adminShow", auth, onlyFor("admin"), async (req, res, next) => {
   const { id } = req.params;
   const [product] = await db.getPosts(id);
-  const [types] = await db.getType();
+  const [types] = await db.getTypes();
   const saving = id
     ? { ...product.find((poroduct) => poroduct.id_product == id) }
     : {};
@@ -221,28 +249,25 @@ router.delete(
   }
 );
 
-router.put("/adminShow/:id", auth, onlyFor("admin"), async (req, res, next) => {
-  const { id_types, title, description, img_src, price } = req.body;
-  const id = req.params.id;
-  try {
-    await db.editPost(id, id_types, title, description, img_src, price);
-    res.send("ok");
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("das");
-  }
-});
-
 router.get("/products", auth, async (req, res, next) => {
   const [products] = await db.getPosts();
   res.render("products", { products, logged: !!req.user });
 });
 
-router.get("/gra/:id", auth, async (req, res, next) => {
+router.get("/product/:id/", auth, async (req, res, next) => {
   const { id } = req.params;
-  const [products] = await db.getGame(id);
+
+  const [products] = await db.getPost(id);
   const product = products ? products[0] : {};
-  res.render("object", { product, logged: !!req.user });
+
+  const id_types = "" + products[0].id_types;
+  const [types] = await db.getType(id_types);
+  const type = types ? types[0] : {};
+  const id_clients = "" + req.user.id;
+  const [clients] = await db.getClient(id_clients);
+  const client = clients ? clients[0] : {};
+
+  res.render("product", { product, type, client, logged: !!req.user });
 });
 
 module.exports = router;

@@ -7,14 +7,14 @@
       </div>
 
       <div class="row mt-70">
-        <% products.forEach(function(products) { %>
+        <% products.forEach(function(product) { %>
         <div class="col-1-of-4 mb-130">
           <div class="card">
-            <div class="card__side card__side--front">
+            <div class="card__side">
               <div class="card__picture">
                 <a class="">
                   <img
-                    src="/img/upload/<%=products.img_src%>"
+                    src="/img/upload/<%=product.img_src%>"
                     alt="Picture Of Game"
                     class="card__picture"
                 /></a>
@@ -22,22 +22,22 @@
               </div>
               <h4 class="card__heading">
                 <span class="card__heading-span card__heading-span--3"
-                  ><%=products.title%></span
+                  ><%=product.title%></span
                 >
               </h4>
               <div class="card__details">
                 <ul>
-                  <li><%=products.description%></li>
+                  <li><%= product.type %></li>
+
+                  <li>
+                    <p class="card__price-value"><%=product.price%> zł</p>
+                  </li>
                 </ul>
               </div>
-            </div>
-            <div class="card__side card__side--back card__side--back-3">
-              <div class="card__cta">
-                <div class="card__price-box">
-                  <p class="card__price-only">Już teraz tylko</p>
-                  <p class="card__price-value"><%=products.price%> zł</p>
-                </div>
-                <a href="/gra/<%=products.id_product%>" class="btn btn--white"
+              <div class="card__btn">
+                <a
+                  href="/product/<%=product.id_product%>"
+                  class="btn btn--white"
                   >Kup teraz</a
                 >
               </div>

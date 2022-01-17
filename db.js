@@ -30,8 +30,12 @@ function execute(query, params) {
   });
 }
 
-function getType() {
-  return execute(`CALL getType()`);
+function getTypes() {
+  return execute(`CALL getTypes()`);
+}
+
+function getType(id) {
+  return execute(`CALL getType(?)`, [id]);
 }
 
 function registerClients(
@@ -107,7 +111,12 @@ function editPost(id, id_types, title, description, img_src, price) {
   ]);
 }
 
+function getClient(id) {
+  return execute(`CALL getClient(?)`, [id]);
+}
+
 module.exports = {
+  getTypes,
   getType,
   loginClient,
   loginAdmin,
@@ -117,4 +126,5 @@ module.exports = {
   addPost,
   removePost,
   editPost,
+  getClient,
 };

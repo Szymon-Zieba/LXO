@@ -6,8 +6,8 @@
   "scripts": {
     "watch:sass": "node-sass ./public/sass/main.scss ./public/css/style.css -w",
     "compile:sass": "node-sass ./public/sass/main.scss ./public/css/style.css",
-    "nodemon" : "nodemon ./bin/www",
-    "start": "nodemon "
+    "nodemon": "nodemon ./bin/www watch:sass",
+    "start": "node ./bin/www"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +24,7 @@
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
     "jwt-simple": "^0.5.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
