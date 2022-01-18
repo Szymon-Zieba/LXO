@@ -76,6 +76,18 @@ function getPosts(id) {
   return execute(`CALL getPosts(?)`, [id]);
 }
 
+function getProductTC(id) {
+  return execute(`CALL getProductTC(?)`, [id]);
+}
+
+function getProductClient(id) {
+  return execute(`CALL getProductClient(?)`, [id]);
+}
+
+function getClientProducts(id) {
+  return execute(`CALL getClientProducts(?)`, [id]);
+}
+
 function addPost(
   id_clients,
   id_types,
@@ -127,4 +139,7 @@ module.exports = {
   removePost,
   editPost,
   getClient,
+  getProductTC,
+  getProductClient,
+  getClientProducts,
 };

@@ -1,54 +1,159 @@
 <body>
-    <main>
-        <%- include('elements/header'); -%>
-
-        <section class="section-aboutus mb-10" id="section-aboutus">
-        <form class="add" action="/add" method="POST">
-            <div class="section-background"> 
-                <div class="row">
-                    <div class="col-2-of-3 mb-20"> 
-                        <div class="form__group field">
-                            <input  required class="form__field " type="text" id="title" placeholder="Tytuł" name="title" autocomplete="off">
-                            <label for="title" class="form__label mb-20">Tytuł Ogłoszenia</label>
-                        </div>  
-                        
-                        <div class="form__group field"> 
-                            <input required class="form__field " type="number" step="any" id="price"  placeholder="Cena" name="price" autocomplete="off">              
-                            <label for="price" class="form__label mb-20 ">Cena</label>
-                        </div>  
-                        <div class="form__group field">       
-                            <input required class="form__field "  type="text" id="description" placeholder="Opis"  name="description" autocomplete="off">
-                            <label for="description" class="form__label mb-20">Opis</label>
-                        </div>  
-                        <div class="form__group field"> 
-                            <input required class="form__field " type="text" id="city" placeholder="Miasto"  name="city" autocomplete="off">         
-                            <label for="city" class="form__label mb-20">Miasto</label>
-                        </div>            
-                    </div>     
-        
-                        
-                    
-                </div>
+  <%- include('elements/header'); -%>
+  <main>
+    <section>
+      <div class="section-games">
+        <% products.forEach(function(product) { %>
+        <div class="page  border mb-100">
+            <form method="POST" action="/add" enctype="multipart/form-data">
                 
-                <div class="form">
-                    <div class="form__group field">
-                        <select size="4" required class="form__field " id="type" placeholder="Gatunek" name="type" >
-                        <label for="title" class="form__label mb-70">Gatunek</label>
-                            <option value="motoryzacja">Motoryzacja</option>
-                            <option value="praca">Praca</option>
-                            <option value="muzyka">Muzyka</option>
-                            <option value="gry">Gry</option>
-                            <option value="sport">Sport</option>
-                    </div>
-                        
-                    <div class="section-login__input-button">                           
-                        <a class="btn btn--white"><button action="POST"  type="submit">Rejestracja</button></a>
-                    </div>
-                </div>
-            </div>
-        </form> 
-        </section>
+                    <input 
+                        type="hidden" 
+                        value="<%=product.id_product%>" 
+                        name="id" />
+
+                    <input
+                    type="hidden"
+                    value="<%=product.id_clients%>"
+                    name="id_clients"
+                    />
                     
-        <%- include('elements/footer'); -%>    
-    </main>
+
+                <div class="add--form__group field mb-20">
+                    <input
+                    class="add--form__field"
+                    type="input"
+                    value="<%=product.title%>"
+                    name="title"
+                    />
+                    <label for="title" class="add--form__label mb-20">Tytuł</label>
+                </div>
+
+                <select
+                    class="add--form__field field mb-20" 
+                    name="id_types" 
+                    value="<%=product.id_types%>">
+                        <% types.forEach(function(type){ %>
+                        
+                        <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>      
+                        <% }) %>
+                    
+                </select>
+
+                <div class="add--form__group mb-20">
+                    <input 
+                        class="add--form__field field" 
+                        name="description" 
+                        value="<%=product.description%>"      
+                    />
+                    <label for="description" class="add--form__label mb-20">Opis</label>
+                </div>
+
+                <div class="add--form__group mb-20 ">
+                    <input 
+                        class="add--form__field field" 
+                        type="number" 
+                        name="price" 
+                        value="<%=product.price%>"
+                        />
+                    <label for="price" class="add--form__label mb-20">Cena</label>
+                </div>
+    <!-- ?>???????????????????????????????????? -->
+                <div class="mb-20">
+                    <input 
+                        class=""
+                        type="file" 
+                        name="img_src" 
+                        value="<%=product.img_src%>"
+                        />                
+                </div>
+
+                <div class="card__btn">
+
+                    <button 
+                        class="btn btn--green" 
+                        type="button" onclick="remove(this)" 
+                        data-id="<%=product.id_product%>"
+                        >Usuń
+                    </button>
+
+                    <button 
+                        class="btn btn--green" 
+                        type="submit" 
+                        id="edit-btn" 
+                        >Edytuj
+                    </button>
+
+                </div>
+            </form>
+        </div>
+        <% }) %>
+        <div class="add border">
+            <form method="POST" action="/add" enctype="multipart/form-data">  
+                <input name="id" type="hidden" value="<%=saving.id%>"/>
+
+                <div class="add--form__group field mb-20">
+                    <input
+                    class="add--form__field"
+                    type="input"
+                    value="<%=saving.title%>"
+                    name="title"
+                    placeholder="Tytuł"
+                    />
+                    <label for="title" class="add--form__label mb-20">Tytuł</label>
+                </div>
+
+                
+                <select 
+                class="panelAdmin-input-register" 
+                name="id_types" 
+                value="<%=saving.type%>">
+                    <option></option>
+                    <% types.forEach(function(type){ %>
+                    <option <%if(saving.type === type.name) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
+                    <% }) %>
+                </select>
+
+
+                <div class="add--form__group field mb-20">
+                    <input
+                    class="add--form__field"
+                    type="input"
+                    value="<%=saving.descritpion%>"
+                    name="description"
+                    />
+                    <label for="description" class="add--form__label mb-20">Opis</label>
+                </div>
+
+                <div class="add--form__group field mb-20">
+                    <input
+                    class="add--form__field"
+                    type="input"
+                    value="<%=saving.price%>"
+                    name="price"
+                    />
+                    <label for="price" class="add--form__label mb-20">Cena</label>
+                </div>
+
+                <input class="panelAdmin-input-register" type="file" name="img_src" value="<%=saving.img_src%>"/>
+
+
+                <div class="card__btn">
+                    <button type="submit" id="add-btn" class="btn btn--green mt-20">Dodaj</button> 
+                </div>
+            </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  <%- include('elements/footer'); -%>
+  <script>
+    function remove(element) {
+        const id = element.getAttribute('data-id');
+        fetch(`/add/${id}`, {method:'DELETE' })
+        .then(response => response.statusText === 'OK' ? window.location.reload() : null);
+    }
+</script>
 </body>
+
+<

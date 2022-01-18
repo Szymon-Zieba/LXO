@@ -1,22 +1,42 @@
-<body >
-    <main>
-        <form class="login" action="/login" method="POST">
-            <div class="section-background"> 
-                <div class="form__group field">
-                    <input type="email" class="form__field mb-20" placeholder="email" name="email" id='email' autocomplete="off" required />
-                    <label for="email" class="form__label mb-20">Email</label>
-                </div>  
-                <div class="form__group field">
-                    <input type="password" class="form__field mb-20" placeholder="Hasło" name="password" id='password' autocomplete="off" required />
-                    <label for="password" class="form__label mb-20">Hasło</label>
-                </div>  
-                <div class="section-login__input-button">
-                    <a href="/"><button type="submit" class ="btn btn--white mb-20" >Login</button></a>              
-                </div>
-                <div class="section-login__input-button">                           
-                    <a class="btn btn--white" href="/register">Rejestracja</a>
-                </div>
-            </div>
-        </form> 
-    </main>
+<body>
+  <main>
+    <form class="login" action="/login" method="POST">
+      <div class="section-background">
+        <div class="form__group field">
+          <input
+            type="email"
+            class="form__field mb-20"
+            placeholder="email"
+            name="email"
+            id="email"
+            autocomplete="off"
+            required
+          />
+          <label for="email" class="form__label mb-20">Email</label>
+        </div>
+        <div class="form__group field">
+          <input
+            type="password"
+            class="form__field mb-20"
+            placeholder="Hasło"
+            name="password"
+            id="password"
+            autocomplete="off"
+            required
+          />
+          <label for="password" class="form__label mb-20">Hasło</label>
+        </div>
+        <div class="section-login__input-button">
+          <a href="/"
+            ><button type="submit" class="btn btn--white mb-20">
+              Login
+            </button></a
+          >
+        </div>
+        <div class="section-login__input-button">
+          <a class="btn btn--white" href="/register">Rejestracja</a>
+        </div>
+      </div>
+    </form>
+  </main>
 </body>

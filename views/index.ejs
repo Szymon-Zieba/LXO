@@ -7,7 +7,7 @@
       </div>
 
       <div class="row">
-        <% getType.forEach(function(type) { %>
+        <% getTypes.forEach(function(type) { %>
         <div class="col-1-of-4 mb-20">
           <div class="section-aboutus-box">
             <div class="section-aboutus-box-img">
@@ -16,13 +16,16 @@
                   src="/img/<%=type.img_source%>"
                   alt="Picture of type"
                   class="composition__photo composition__photo--p1"
-                  href="#"
+                  href="/products/<%=type.id_types %>"
                 />
               </a>
             </div>
 
             <div class="section-aboutus-box-text">
-              <a class="heading-tertiary btn-text" href="#">
+              <a
+                class="heading-tertiary btn-text"
+                href="/products/<%=type.id_types %>"
+              >
                 <span class=""><%=type.name%></span>
               </a>
             </div>

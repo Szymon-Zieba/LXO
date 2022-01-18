@@ -3,7 +3,7 @@
     <%- include('elements/header'); -%>
     <section class="section-games" id="section-games">
       <div class="u-center-text u-margin-bottom-big">
-        <h2 class="heading-secondary">OGŁOSZENIA</h2>
+        <h2 class="heading-secondary"><%products.type%>dsa</h2>
       </div>
 
       <div class="row mt-70">
@@ -27,7 +27,7 @@
               </h4>
               <div class="card__details">
                 <ul>
-                  <li><%= product.type %></li>
+                  <li><%=product.description.substring(0,70)%>...</li>
 
                   <li>
                     <p class="card__price-value"><%=product.price%> zł</p>

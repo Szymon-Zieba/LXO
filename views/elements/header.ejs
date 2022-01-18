@@ -1,58 +1,95 @@
-    <body>
-        <div class="navigation">
-            <input type="checkbox" class="navigation__checkbox" id="navi-toggle">
+<body>
+  <div class="navigation">
+    <input type="checkbox" class="navigation__checkbox" id="navi-toggle" />
 
-            <label for="navi-toggle" class="navigation__button">
-                <span class="navigation__icon">&nbsp;</span>
-            </label>
+    <label for="navi-toggle" class="navigation__button">
+      <span class="navigation__icon">&nbsp;</span>
+    </label>
 
-            <div class="navigation__background">&nbsp;</div>
+    <div class="navigation__background">&nbsp;</div>
 
-            <nav class="navigation__nav">
-                <ul class="navigation__list">
-                    <li class="navigation__item"><a href="/about" class="navigation__link"><span>01</span>O nas</a></li>
-                    <li class="navigation__item"><a href="/#section-aboutus" class="navigation__link"><span>02</span>Kategorie</a></li>
-                    <li class="navigation__item"><a href="#" class="navigation__link"><span>03</span>Opinie</a></li>
+    <nav class="navigation__nav">
+      <ul class="navigation__list">
+        <li class="navigation__item">
+          <a href="/about" class="navigation__link"><span>01</span>O nas</a>
+        </li>
+        <li class="navigation__item">
+          <a href="/#section-aboutus" class="navigation__link"
+            ><span>02</span>Kategorie</a
+          >
+        </li>
+        <li class="navigation__item">
+          <a href="#" class="navigation__link"><span>03</span>Opinie</a>
+        </li>
 
-                    <li class="navigation__item"><a href="/<%=logged ? 'add' : 'login' %>" class="navigation__link"><span>04</span><%= logged ? 'Dodaj Ogłoszenie' : 'Login' %></a></li>
-                    <li class="navigation__item"><a href="/<%=logged ? 'profile' : 'register' %>" class="navigation__link"><span>05</span><%= logged ? 'Twój Profil' : 'Register' %></a></li>
-                    
-                    <% if(logged){ %> 
-                        <li class="navigation__item"><a href="/wishlist" class="navigation__link"><span>07</span>Ulubione</a></li>
-                    <% } %>
+        <li class="navigation__item">
+          <a href="/<%=logged ? 'add' : 'login' %>" class="navigation__link"
+            ><span>04</span><%= logged ? 'Dodaj Ogłoszenie' : 'Login' %></a
+          >
+        </li>
+        <li class="navigation__item">
+          <a
+            href="/<%=logged ? 'profile' : 'register' %>"
+            class="navigation__link"
+            ><span>05</span><%= logged ? 'Twój Profil' : 'Register' %></a
+          >
+        </li>
 
-                   <% if(logged){ %> 
-                        <li class="navigation__item"><a onclick="logout()" href="#" id="logout"class="navigation__link"><span>08</span>Wyloguj</a></li>
-                    <% } %>
-                 </ul>
-            </nav>
-        </div>
+        <% if(logged){ %>
+        <li class="navigation__item">
+          <a href="/wishlist" class="navigation__link"
+            ><span>07</span>Ulubione</a
+          >
+        </li>
+        <% } %> <% if(logged){ %>
+        <li class="navigation__item">
+          <a onclick="logout()" href="/" id="logout" class="navigation__link"
+            ><span>08</span>Wyloguj</a
+          >
+        </li>
+        <% } %>
+      </ul>
+    </nav>
+  </div>
 
-        <header class="header">
-            <div class="header__logo-box">
-                <a href="/"><img src="/img/logo-white.png" alt="Logo" class="header__logo"></a>
-            </div>
+  <header class="header">
+    <div class="header__logo-box">
+      <a href="/"
+        ><img src="/img/logo-white.png" alt="Logo" class="header__logo"
+      /></a>
+    </div>
 
-            <div class="header__text-box">
-                <h1 class="heading-primary">
-                    <span class="heading-primary--main">LXO</span>
-                    <span class="heading-primary--sub">Znajdz to czego potrzebujesz</span>
-                </h1>
+    <div class="header__text-box">
+      <h1 class="heading-primary">
+        <span class="heading-primary--main">LXO</span>
+        <span class="heading-primary--sub">Znajdz to czego potrzebujesz</span>
+      </h1>
 
-                <div class="form__group field">
-                    <input type="input" class="form__field mb-20" type = "text" placeholder="Szukaj" name="search" id='search' autocomplete="off" required />
-                    <label for="search" class="form__label mb-20">Szukaj</label>
-                </div> 
-            </div>
-        </header>
-        <script>
-            function logout (){
-                fetch('/logout', {method:'POST'}).then(response => response.json())
-                .then(data => {
-                    location.reload();
-                }).catch(error => { 
-                    console.error(error);
-                })              
-            }
-        </script>         
-    </body>
+      <div class="form__group field">
+        <input
+          type="input"
+          class="form__field mb-20"
+          type="text"
+          placeholder="Szukaj"
+          name="search"
+          id="search"
+          autocomplete="off"
+          required
+        />
+        <label for="search" class="form__label mb-20">Szukaj</label>
+      </div>
+    </div>
+  </header>
+  <script>
+    function logout() {
+      fetch("/logout", { method: "POST" })
+        .then((response) => response.json())
+        .then((data) => {
+          location.reload();
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  </script>
+</body>

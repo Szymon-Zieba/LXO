@@ -2,6 +2,6 @@
     "secret": "%#$@*(%#@*)%&#@*%&_)(@*#&^)(_",
     "refreshTokenSecret": "some-secret-refresh-token-shit",
     "port": 3000,
-    "tokenLife": 900,
-    "refreshTokenLife": 86400
+    "tokenLife": 9000,
+    "refreshTokenLife": 8640000
 }

@@ -133,10 +133,6 @@ router.post("/register", async (req, res, next) => {
   res.redirect("/login");
 });
 
-router.get("/add", auth, function (req, res, next) {
-  res.render("add", { logged: !!req.user });
-});
-
 router.post("/logout", auth, function (req, res, next) {
   delete tokens[req.cookies.refresh];
   res.clearCookie("token");
@@ -174,100 +170,165 @@ router.get("/adminShow", auth, onlyFor("admin"), async (req, res, next) => {
   res.render("adminShow", { product, logged: !!req.user, types, saving });
 });
 
-router.post(
-  "/adminShow",
-  upload.single("img_src"),
-  auth,
-  async (req, res, next) => {
-    const { id, id_types, title, description, price } = req.body;
-    const id_clients = "" + req.user.id;
-    const date_publishment = new Date().toISOString();
+// router.post(
+//   "/adminShow",
+//   upload.single("img_src"),
+//   auth,
+//   async (req, res, next) => {
+//     const { id, id_types, title, description, price } = req.body;
+//     const id_clients = "" + req.user.id;
+//     const date_publishment = new Date().toISOString();
 
-    // CHECK IF FILE
-    if (!req.file) {
-      res.status(500).send("No file upload");
-    } else {
-      //  CHECK IF PHOTO FORMAT
-      if (!whitelist.includes(req.file.mimetype)) {
-        res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
-      } else {
-        const img_src =
-          req.file.filename + "." + req.file.mimetype.split("/")[1];
-        fs.copyFileSync(tmpDir + req.file.filename, uploadDir + img_src);
-        fs.unlinkSync(tmpDir + req.file.filename);
-        // CHECK IF ADD OR EDIT
+//     // CHECK IF FILE
+//     if (!req.file) {
+//       res.status(500).send("No file upload");
+//     } else {
+//       //  CHECK IF PHOTO FORMAT
+//       if (!whitelist.includes(req.file.mimetype)) {
+//         res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
+//       } else {
+//         const img_src =
+//           req.file.filename + "." + req.file.mimetype.split("/")[1];
+//         fs.copyFileSync(tmpDir + req.file.filename, uploadDir + img_src);
+//         fs.unlinkSync(tmpDir + req.file.filename);
+//         // CHECK IF ADD OR EDIT
 
-        //ADD
-        if (!id) {
-          try {
-            await db.addPost(
-              id_clients,
-              id_types,
-              title,
-              description,
-              img_src,
-              price,
-              date_publishment
-            );
-            res.redirect("/adminShow");
-          } catch (error) {
-            console.error(error);
-            res.status(500).send("error");
-          }
-          console.log("ADD CORECTLY");
-        }
+//         //ADD
+//         if (!id) {
+//           try {
+//             await db.addPost(
+//               id_clients,
+//               id_types,
+//               title,
+//               description,
+//               img_src,
+//               price,
+//               date_publishment
+//             );
+//             res.redirect("/adminShow");
+//           } catch (error) {
+//             console.error(error);
+//             res.status(500).send("error");
+//           }
+//           console.log("ADD CORECTLY");
+//         }
 
-        //EDIT
-        else {
-          try {
-            await db.editPost(id_types, title, description, img_src, price);
-            res.redirect("/adminShow");
-          } catch (error) {
-            console.error(error);
-            res.status(500).send("error");
-          }
-          console.log("EDIT CORECTLY");
-        }
-      }
-    }
-  }
-);
+//         //EDIT
+//         else {
+//           try {
+//             await db.editPost(id_types, title, description, img_src, price);
+//             res.redirect("/adminShow");
+//           } catch (error) {
+//             console.error(error);
+//             res.status(500).send("error");
+//           }
+//           console.log("EDIT CORECTLY");
+//         }
+//       }
+//     }
+//   }
+// );
 
-router.delete(
-  "/adminShow/:id",
-  auth,
-  onlyFor("admin"),
-  async (req, res, next) => {
-    const { id } = req.params;
-    try {
-      await db.removePost(id);
-      res.send("ok");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("error");
-    }
-  }
-);
+// router.delete(
+//   "/adminShow/:id",
+//   auth,
+//   onlyFor("admin"),
+//   async (req, res, next) => {
+//     const { id } = req.params;
+//     try {
+//       await db.removePost(id);
+//       res.send("ok");
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).send("error");
+//     }
+//   }
+// );
 
-router.get("/products", auth, async (req, res, next) => {
-  const [products] = await db.getPosts();
+router.get("/products/:id/", auth, async (req, res, next) => {
+  const [products] = await db.getPosts(req.params.id);
   res.render("products", { products, logged: !!req.user });
 });
 
 router.get("/product/:id/", auth, async (req, res, next) => {
-  const { id } = req.params;
-
-  const [products] = await db.getPost(id);
+  const [products] = await db.getProductTC();
   const product = products ? products[0] : {};
 
-  const id_types = "" + products[0].id_types;
-  const [types] = await db.getType(id_types);
-  const type = types ? types[0] : {};
-  const id_clients = "" + req.user.id;
-  const [clients] = await db.getClient(id_clients);
-  const client = clients ? clients[0] : {};
+  res.render("product", { product, logged: !!req.user });
+});
 
-  res.render("product", { product, type, client, logged: !!req.user });
+router.get("/add", auth, async (req, res, next) => {
+  const { id } = req.params;
+  const id_clients = "" + req.user.id;
+  const [products] = await db.getClientProducts(id_clients);
+  const [types] = await db.getTypes();
+  const saving = id
+    ? { ...products.find((poroduct) => poroduct.id_product == id) }
+    : {};
+  res.render("add", { products, saving, types, logged: !!req.us });
+});
+
+router.post("/add", upload.single("img_src"), auth, async (req, res, next) => {
+  const { id, id_types, title, description, price } = req.body;
+  const id_clients = "" + req.user.id;
+  const date_publishment = new Date().toISOString();
+
+  // CHECK IF FILE
+  if (!req.file) {
+    res.status(500).send("No file upload");
+  } else {
+    //  CHECK IF PHOTO FORMAT
+    if (!whitelist.includes(req.file.mimetype)) {
+      res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
+    } else {
+      const img_src = req.file.filename + "." + req.file.mimetype.split("/")[1];
+      fs.copyFileSync(tmpDir + req.file.filename, uploadDir + img_src);
+      fs.unlinkSync(tmpDir + req.file.filename);
+      // CHECK IF ADD OR EDIT
+
+      //EDIT
+      if (!id) {
+        try {
+          await db.addPost(
+            id_clients,
+            id_types,
+            title,
+            description,
+            img_src,
+            price,
+            date_publishment
+          );
+          res.redirect("/add");
+        } catch (error) {
+          console.error(error);
+          res.status(500).send("error");
+        }
+        console.log("ADD CORECTLY");
+      }
+      //ADD
+      else {
+        try {
+          await db.editPost(id, id_types, title, description, img_src, price);
+          res.redirect("/add");
+        } catch (error) {
+          console.error(error);
+          res.status(500).send("error");
+        }
+        console.log("EDIT CORECTLY");
+      }
+    }
+  }
+});
+
+router.delete("/add/:id", auth, async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    await db.removePost(id);
+    res.send("ok");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("error");
+  }
 });
 
 module.exports = router;
