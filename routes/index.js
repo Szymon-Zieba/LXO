@@ -26,10 +26,9 @@ function auth(req, res, next) {
       if (err) {
         // wygasnienice tokenu
         if (tokens[refresh]) {
-          jwt.verify(
-            refresh,
-            config.refreshTokenSecret,
-            function (err, decoded) {
+          jwt.verify(refresh, config.refreshTokenSecret, {
+            algorithms: ["RS256"],
+            function(err, decoded) {
               if (err) {
                 return res.status(401).send("Unauthorized access.");
               }
@@ -38,8 +37,8 @@ function auth(req, res, next) {
               });
               res.cookie("token", token, { httpOnly: true, secure: true });
               req.user = decoded;
-            }
-          );
+            },
+          });
         }
       } else {
         req.user = decoded;
@@ -86,8 +85,10 @@ router.post("/login", auth, async (req, res, next) => {
   }
   const [result] = await db.loginClient(email, password);
   if (result.length) {
-    const user = result[0];
-    const userData = { email: user.email, role: "user", id: user.id_clients };
+    const toID = result.map((o) => o.email).indexOf(email);
+    const id_clients = result[toID].id_clients;
+    const user = result[toID].email;
+    const userData = { email: user, role: "user", id: id_clients };
     const token = jwt.sign(userData, config.secret, {
       expiresIn: config.tokenLife,
     });

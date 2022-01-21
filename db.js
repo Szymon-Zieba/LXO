@@ -127,6 +127,10 @@ function getClient(id) {
   return execute(`CALL getClient(?)`, [id]);
 }
 
+function getClientByEmail(email) {
+  return execute(`CALL getClientByEmail(?)`, [email]);
+}
+
 module.exports = {
   getTypes,
   getType,
@@ -142,4 +146,5 @@ module.exports = {
   getProductTC,
   getProductClient,
   getClientProducts,
+  getClientByEmail,
 };
