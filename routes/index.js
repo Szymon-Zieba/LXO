@@ -272,7 +272,9 @@ router.get("/add", auth, async (req, res, next) => {
 router.post("/add", upload.single("img_src"), auth, async (req, res, next) => {
   const { id, id_types, title, description, price } = req.body;
   const id_clients = "" + req.user.id;
-  const date_publishment = new Date().toISOString();
+  const date = new Date().toISOString().split("T")[0];
+  const hour = new Date().toISOString().split("T")[1].slice(0, 8);
+  const date_publishment = `${date}${" "}${hour}`;
 
   // CHECK IF FILE
   if (!req.file) {

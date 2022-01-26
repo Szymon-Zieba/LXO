@@ -3,7 +3,9 @@
   <main>
     <section>
       <div class="section-games mb-100">
+        <div class="row">
         <% products.forEach(function(product) { %>
+        <div class="col-1-of-3">
         <div class="page  border mb-100">
             <form method="POST" action="/add" enctype="multipart/form-data">
                 
@@ -29,16 +31,22 @@
                     <label for="title" class="add--form__label mb-20">Tytuł</label>
                 </div>
 
-                <select
-                    class="add--form__field field mb-20" 
-                    name="id_types" 
-                    value="<%=product.id_types%>">
-                        <% types.forEach(function(type){ %>
-                        
-                        <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>      
-                        <% }) %>
-                    
-                </select>
+                <div class="demo">
+                    <div class="dropdown-container">
+                        <select
+                            name="id_types" 
+                            value="<%=product.id_types%>">
+                            <% types.forEach(function(type){ %>
+                                <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
+                                <% }) %>
+                        </select>
+                        <div class="select-icon">
+                            <svg focusable="false" viewBox="0 0 104 128" width="20" height="30" class="icon">
+                            <path d="m2e1 95a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm14 55h68v1e1h-68zm0-3e1h68v1e1h-68zm0-3e1h68v1e1h-68z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="add--form__group mb-20">
                     <input 
@@ -58,20 +66,28 @@
                         />
                     <label for="price" class="add--form__label mb-20">Cena</label>
                 </div>
-    <!-- ?>???????????????????????????????????? -->
-                <div class="mb-20">
-                    <input 
-                        class=""
-                        type="file" 
-                        name="img_src" 
-                        value="<%=product.img_src%>"
-                        />                
+
+                <div class="picture-div mb-25">
+                    <a class="">
+                      <img
+                        src="/img/upload/<%=product.img_src%>"
+                        alt="Picture Of Product"
+                        class="picture"
+                    /></a>
+                    &nbsp;
+                  </div>
+
+                <div class="container-upload mb-20">
+                    <div class="parent-div">
+                        <button class="btn-upload">Wybierz Plik</button>
+                        <input type="file" name="img_src" value="<%=product.img_src%>"/>
+                    </div>
                 </div>
 
-                <div class="card__btn">
+                <div class="card__btn mb-10">
 
                     <button 
-                        class="btn btn--green" 
+                        class="btn btn--green mr-30" 
                         type="button" onclick="remove(this)" 
                         data-id="<%=product.id_product%>"
                         >Usuń
@@ -87,7 +103,11 @@
                 </div>
             </form>
         </div>
-        <% }) %>
+        </div>
+            <% }) %>
+        </div>
+
+
         <div class="add border">
             <form method="POST" action="/add" enctype="multipart/form-data">  
                 <input name="id" type="hidden" value="<%=saving.id%>"/>
@@ -103,16 +123,22 @@
                     <label for="title" class="add--form__label mb-20">Tytuł</label>
                 </div>
 
-                
-                <select 
-                class="panelAdmin-input-register" 
-                name="id_types" 
-                value="<%=saving.type%>">
-                    <option></option>
-                    <% types.forEach(function(type){ %>
-                    <option <%if(saving.type === type.name) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
-                    <% }) %>
-                </select>
+                <div class="demo">
+                    <div class="dropdown-container">
+                        <select
+                            name="id_types" 
+                            value="<%=saving.type%>">
+                                <% types.forEach(function(type){ %>
+                                <option <%if(saving.type === type.name) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
+                                <% }) %>
+                        </select>
+                        <div class="select-icon">
+                            <svg focusable="false" viewBox="0 0 104 128" width="20" height="30" class="icon">
+                            <path d="m2e1 95a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm0-3e1a9 9 0 0 1 -9 9 9 9 0 0 1 -9 -9 9 9 0 0 1 9 -9 9 9 0 0 1 9 9zm14 55h68v1e1h-68zm0-3e1h68v1e1h-68zm0-3e1h68v1e1h-68z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
 
 
                 <div class="add--form__group field mb-20">
@@ -135,8 +161,12 @@
                     <label for="price" class="add--form__label mb-20">Cena</label>
                 </div>
 
-                <input class="panelAdmin-input-register" type="file" name="img_src" value="<%=saving.img_src%>"/>
-
+                <div class="container-upload">
+                    <div class="parent-div">
+                        <button class="btn-upload">Wybierz Plik</button>
+                        <input type="file" name="img_src" value="<%=saving.img_src%>"/>
+                    </div>
+                </div>
 
                 <div class="card__btn">
                     <button type="submit" id="add-btn" class="btn btn--green mt-20">Dodaj</button> 
