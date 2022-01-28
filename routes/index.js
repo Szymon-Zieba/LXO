@@ -6,7 +6,6 @@ var secret = "%#$@*(%#@*)%&#@*%&_)(@*#&^)(_";
 const { createConnection } = require("mysql");
 const emailRegexp =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
-const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
@@ -110,10 +109,6 @@ router.post("/login", auth, async (req, res, next) => {
 router.post("/register", async (req, res, next) => {
   const { name, lastName, email, password, phone_number, adress } = req.body;
 
-  //        ZROBIC HASHOWANIE HASLA
-
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
   try {
     await db.registerClients(
       name,
@@ -289,7 +284,7 @@ router.post("/add", upload.single("img_src"), auth, async (req, res, next) => {
       fs.unlinkSync(tmpDir + req.file.filename);
       // CHECK IF ADD OR EDIT
 
-      //EDIT
+      //add
       if (!id) {
         try {
           await db.addPost(
@@ -308,7 +303,7 @@ router.post("/add", upload.single("img_src"), auth, async (req, res, next) => {
         }
         console.log("ADD CORECTLY");
       }
-      //ADD
+      //edit
       else {
         try {
           await db.editPost(id, id_types, title, description, img_src, price);

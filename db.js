@@ -2,9 +2,12 @@ var mysql = require("mysql");
 
 function connectDB() {
   var connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
+    host: "maria_db",
+    //host: "localhost",
+    //user: "root",
+    user: "admin@test.pl",
     database: "mysql",
+    password: "admin",
   });
   return new Promise((resolve, reject) => {
     connection.connect(function (err) {
