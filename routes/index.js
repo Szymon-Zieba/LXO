@@ -18,30 +18,11 @@ const uploadDir = path.join(__dirname + "/../public/img/upload/");
 const config = require("../config.json");
 
 function auth(req, res, next) {
-  const { token, refresh } = req.cookies;
+  const { token } = req.cookies;
 
   if (token) {
     jwt.verify(token, config.secret, function (err, decoded) {
-      if (err) {
-        // wygasnienice tokenu
-        if (tokens[refresh]) {
-          jwt.verify(refresh, config.refreshTokenSecret, {
-            algorithms: ["RS256"],
-            function(err, decoded) {
-              if (err) {
-                return res.status(401).send("Unauthorized access.");
-              }
-              const token = jwt.sign(userData, config.secret, {
-                expiresIn: config.tokenLife,
-              });
-              res.cookie("token", token, { httpOnly: true, secure: true });
-              req.user = decoded;
-            },
-          });
-        }
-      } else {
-        req.user = decoded;
-      }
+      req.user = decoded;
     });
   }
   next();

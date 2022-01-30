@@ -963,6 +963,9 @@ select:focus ~ .select-icon svg.icon {
   height: 0.1px;
   position: absolute; }
 
+.input {
+  height: 100%; }
+
 .add {
   /* reset input */ }
   .add--form__group {

@@ -25,7 +25,7 @@
                     <input
                     class="add--form__field"
                     type="input"
-                    value="<%=product.title%>"
+                    value="<%-product.title%>"
                     name="title"
                     />
                     <label for="title" class="add--form__label mb-20">Tytuł</label>
@@ -35,9 +35,9 @@
                     <div class="dropdown-container">
                         <select
                             name="id_types" 
-                            value="<%=product.id_types%>">
+                            value="<%-product.id_types%>">
                             <% types.forEach(function(type){ %>
-                                <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
+                                <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%-type.id_types %>"><%-type.name %></option>
                                 <% }) %>
                         </select>
                         <div class="select-icon">
@@ -52,7 +52,7 @@
                     <input 
                         class="add--form__field field" 
                         name="description" 
-                        value="<%=product.description%>"      
+                        value="<%-product.description%>"      
                     />
                     <label for="description" class="add--form__label mb-20">Opis</label>
                 </div>
@@ -62,7 +62,7 @@
                         class="add--form__field field" 
                         type="number" 
                         name="price" 
-                        value="<%=product.price%>"
+                        value="<%-product.price%>"
                         />
                     <label for="price" class="add--form__label mb-20">Cena</label>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="picture-div mb-25">
                     <a class="">
                       <img
-                        src="/img/upload/<%=product.img_src%>"
+                        src="/img/upload/<%-product.img_src%>"
                         alt="Picture Of Product"
                         class="picture"
                     /></a>
@@ -80,7 +80,11 @@
                 <div class="container-upload mb-20">
                     <div class="parent-div">
                         <button class="btn-upload">Wybierz Plik</button>
+<<<<<<< HEAD
+                        <input class="input" type="file" name="img_src" value="<%-product.img_src%>"/>
+=======
                         <input class="input" type="file" name="img_src" value="<%=product.img_src%>"/>
+>>>>>>> b3e4a894d618b56afee9cc0e8eeab79c1008c6e2
                     </div>
                 </div>
 
@@ -89,7 +93,7 @@
                     <button 
                         class="btn btn--green mr-30" 
                         type="button" onclick="remove(this)" 
-                        data-id="<%=product.id_product%>"
+                        data-id="<%-product.id_product%>"
                         >Usuń
                     </button>
 
@@ -116,7 +120,7 @@
                     <input
                     class="add--form__field"
                     type="input"
-                    value="<%=saving.title%>"
+                    value="<%-saving.title%>"
                     name="title"
                     placeholder="Tytuł"
                     />
@@ -127,9 +131,9 @@
                     <div class="dropdown-container">
                         <select
                             name="id_types" 
-                            value="<%=saving.type%>">
+                            value="<%-saving.type%>">
                                 <% types.forEach(function(type){ %>
-                                <option <%if(saving.type === type.name) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
+                                <option <%if(saving.type === type.name) {%> selected <% }%> value="<%-type.id_types %>"><%-type.name %></option>
                                 <% }) %>
                         </select>
                         <div class="select-icon">
@@ -145,7 +149,7 @@
                     <input
                     class="add--form__field"
                     type="input"
-                    value="<%=saving.descritpion%>"
+                    value="<%-saving.descritpion%>"
                     name="description"
                     />
                     <label for="description" class="add--form__label mb-20">Opis</label>
@@ -155,7 +159,7 @@
                     <input
                     class="add--form__field"
                     type="input"
-                    value="<%=saving.price%>"
+                    value="<%-saving.price%>"
                     name="price"
                     />
                     <label for="price" class="add--form__label mb-20">Cena</label>
@@ -163,8 +167,15 @@
 
                 <div class="container-upload">
                     <div class="parent-div">
+<<<<<<< HEAD
+                        <button class="btn-upload">Wybierz Plik
+                            <input class="input" type="file" name="img_src" value="<%-saving.img_src%>"/>
+                        </button>
+                        
+=======
                         <button class="btn-upload">Wybierz Plik</button>
                         <input class="input" type="file" name="img_src" value="<%=saving.img_src%>"/>
+>>>>>>> b3e4a894d618b56afee9cc0e8eeab79c1008c6e2
                     </div>
                 </div>
 

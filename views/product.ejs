@@ -3,34 +3,34 @@
   <main>
     <section class="section-game">
       <div class="u-center-text u-margin-bottom-big">
-        <h2 class="heading-secondary"><%=product.title%></h2>
+        <h2 class="heading-secondary"><%-product.title%></h2>
       </div>
 
       <div class="row mt-70">
         <div class="col-1-of-2 u-center-text">
-          <h1 class="paragraph">Typ: <%=product.type%></h1>
+          <h1 class="paragraph">Typ: <%-product.type%></h1>
 
-          <p class="paragraph"><%=product.description%></p>
+          <p class="paragraph"><%-product.description%></p>
 
           <h1 class="paragraph">
-            Data publikacji: <%=product.date_publishment?.toLocaleString()%>
+            Data publikacji: <%-product.date_publishment?.toLocaleString()%>
           </h1>
 
-          <h1 class="paragraph">Cena: <%=product.price%> zł</h1>
-          <h1 class="paragraph">Email: <%=product.email%></h1>
-          <h1 class="paragraph">Nr: +48 <%=product.phone_number%></h1>
+          <h1 class="paragraph">Cena: <%-product.price%> zł</h1>
+          <h1 class="paragraph">Email: <%-product.email%></h1>
+          <h1 class="paragraph">Nr: +48 <%-product.phone_number%></h1>
         </div>
         <div class="col-1-of-2">
           <div class="composition">
             <img
               srcset="
-                /img/upload/<%=product.img_src%>  300w,
-                /img/upload/<%=product.img_src%> 1000w
+                /img/upload/<%-product.img_src%>  300w,
+                /img/upload/<%-product.img_src%> 1000w
               "
               sizes="(max-width: 56.25em) 20vw, (max-width: 37.5em) 30vw, 300px"
               alt="Photo 1"
               class="composition__product composition__product--p1"
-              src="/img/upload/<%=product.img_src%>"
+              src="/img/upload/<%-product.img_src%>"
             />
           </div>
         </div>

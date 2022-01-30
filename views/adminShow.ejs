@@ -29,20 +29,20 @@
                   <% product.forEach(function(product) { %>
                       <tr class="panelAdmin-tr product-tr">
                         <form action="/adminShow" method="POST" enctype="multipart/form-data">
-                            <input name="id_product" type="hidden" value="<%=product.id%>"/>
-                            <input name="id_product" type="hidden" value="<%=product.id_clients%>"/>
+                            <input name="id_product" type="hidden" value="<%-product.id%>"/>
+                            <input name="id_product" type="hidden" value="<%-product.id_clients%>"/>
                             <td contenteditable='true' class ="panelAdmin-text">
                                 <a class="panelAdmin-a" name = "title">
-                                    <input class="panelAdmin-input-register" name = "title" value="<%=product.title%>"/>
+                                    <input class="panelAdmin-input-register" name = "title" value="<%-product.title%>"/>
                                 </a>
                             </td>
                             <td contenteditable='true' class="panelAdmin-td-register">
                                     <a class ="panelAdmin-a-register">
-                                        <select class="panelAdmin-input-register" name="id_types" value="<%=product.id_types%>">
+                                        <select class="panelAdmin-input-register" name="id_types" value="<%-product.id_types%>">
                                             <option></option>
                                             <% types.forEach(function(type){ %>
                                             
-                                            <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>      
+                                            <option <%if(product.id_types === type.id_types) {%> selected <% }%> value="<%-type.id_types %>"><%-type.name %></option>      
                                             <% }) %>
                                         </select>
                                         
@@ -50,22 +50,22 @@
                                 </td>
                             <td contenteditable='true' class ="panelAdmin-text">
                                 <a class="panelAdmin-a" name = "description">
-                                    <input class="panelAdmin-input-register" name = "title" value="<%=product.description%>"/>
+                                    <input class="panelAdmin-input-register" name = "title" value="<%-product.description%>"/>
                                 </a>
                                 
                             </td>
                             <td contenteditable='true' class ="panelAdmin-text">
                                 <a class="panelAdmin-a" name = "price">
-                                    <input class="panelAdmin-input-register" type="number" name = "title" value="<%=product.price%>"/>
+                                    <input class="panelAdmin-input-register" type="number" name = "title" value="<%-product.price%>"/>
                                 </a>
                             </td>
                             <td contenteditable='true' class ="panelAdmin-text">
                                 <a class="panelAdmin-a" name="img_src">
-                                    <input class="panelAdmin-input-register" type="file" name = "title" value="<%=product.img_src%>"/>
+                                    <input class="panelAdmin-input-register" type="file" name = "title" value="<%-product.img_src%>"/>
                                 </a>
                             </td>
                             <td class ="panelAdmin-text">
-                                    <button type="button" onclick="remove(this)" data-id="<%=product.id_product%>" class="panelAdmin-button">Usuń</button>
+                                    <button type="button" onclick="remove(this)" data-id="<%-product.id_product%>" class="panelAdmin-button">Usuń</button>
                             </td>
                             <td class ="panelAdmin-text">
                                     <button class="panelAdmin-button" type="submit" id="edit-btn" >Edytuj</button>
@@ -76,52 +76,6 @@
                     
                     <% }) %>
                   </div>  
-
-            <div class="panelAdmin-insert">
-                <form method="POST" action="/adminShow" enctype="multipart/form-data">
-                    <input name="id_product" type="hidden" value="<%=saving.id%>"/>
-                    <table class="panelAdmin">
-                        <tr class="panelAdmin-tr-register">
-                            <td class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Tytuł :
-                                    <input class="panelAdmin-input-register" name="title" value="<%=saving.title%>"/>
-                                </a>
-                            </td>
-                            <td class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Typ :
-                                    <select class="panelAdmin-input-register" name="id_types" value="<%=saving.type%>">
-                                        <option></option>
-                                        <% types.forEach(function(type){ %>
-                                        <option <%if(saving.type === type.name) {%> selected <% }%> value="<%= type.id_types %>"><%= type.name %></option>
-                                        <% }) %>
-                                    </select>
-                                </a>
-                            </td>
-                            <td class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Opis :
-                                    <input class="panelAdmin-input-register" name = "description" value="<%=saving.description%>">
-                                </a>
-                            </td>
-
-                            </td>
-                            <td class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Cena :
-                                    <input class="panelAdmin-input-register" type="number" name = "price" min="1" step="any" value="<%=saving.price%>"/>
-                                </a> 
-                            </td>
-
-                            <td class="panelAdmin-td-register">
-                                <a class ="panelAdmin-a-register">Zdjęcie:
-                                    <input class="panelAdmin-input-register" type="file" name="img_src" value="<%=saving.img_src%>"/>
-                                </a> 
-                            </td>
-                            <td class="panelAdmin-td-register ">
-                                <button type="submit" id="add-btn" class="panelAdmin-button mt-20"><%if(saving.id) { %>Edytuj<%}else{%>Dodaj<%}%></button>
-                            </td>
-                        </tr>
-                    </table>   
-                </form>
-            </div>
         </section>           
     </main>
  

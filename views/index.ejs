@@ -13,10 +13,10 @@
             <div class="section-aboutus-box-img">
               <a class="" href="#">
                 <img
-                  src="/img/<%=type.img_source%>"
+                  src="/img/<%-type.img_source%>"
                   alt="Picture of type"
                   class="composition__photo composition__photo--p1"
-                  href="/products/<%=type.id_types %>"
+                  href="/products/<%-type.id_types %>"
                 />
               </a>
             </div>
@@ -24,9 +24,9 @@
             <div class="section-aboutus-box-text">
               <a
                 class="heading-tertiary btn-text"
-                href="/products/<%=type.id_types %>"
+                href="/products/<%-type.id_types %>"
               >
-                <span class=""><%=type.name%></span>
+                <span class=""><%-type.name%></span>
               </a>
             </div>
           </div>
