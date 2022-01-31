@@ -8,7 +8,7 @@ https://hub.docker.com/repository/docker/szymonzieba/no-injection-lxo
 
 Steps to run projekt with docker
 
-  git clone https://github.com/Szymon-Zieba/starter.git	
+    git clone https://github.com/Szymon-Zieba/starter.git	
   
     git checkout no-injection // with no injection
     
