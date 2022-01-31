@@ -45,7 +45,7 @@ INSERT INTO `clients` (`id_clients`, `name`, `lastName`, `email`, `password`, `p
 (1, 'Dawid', 'Pudełko', 'dawid@gmail.com', '123', '323123213', 'Rzeszów 3 maja 3'),
 (10, 'Szymon', 'Zięba', 'szymon@gmail.com', '123', '321321321', 'Sędziszów ul antoniego 54'),
 (26, 'Andrzej', 'Pietrzak', 'andrzej@gmail.com', '123', '123232131', 'ciekawska 13'),
-(30, 'dsa', 'dadsad', 'szymon@adam.pl', '123', '323213323', 'dsd')ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(30, 'dsa', 'dadsad', 'szymon@adam.pl', '123', '323213323', 'dsd');
 
 -- --------------------------------------------------------
 
@@ -76,7 +76,7 @@ INSERT INTO `poroduct` (`id_product`, `id_types`, `id_clients`, `title`, `descri
 (72, 18, 10, 'cos nowego', '321312312', '3c590faaf595e6291541b1e9159c1bac.jpeg', '0.00', '2022-01-21 00:00:00'),
 (73, 14, 10, 'SIEMA', '321312412412', 'f457797a7c9bed9943ff6abcc13ab8d3.jpeg', '0.00', '2022-01-21 00:00:00'),
 (74, 14, 10, 'asdadad', '312321.421', '056f89f18bf09947bc67e53d6092066b.jpeg', '0.00', '2022-01-21 00:00:00'),
-(75, 14, 10, 'Stara baśń', '3213', '34d21dae5b3c45065ea2229c628ffe27.jpeg', '0.00', '2022-01-21 00:00:00')ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(75, 14, 10, 'Stara baśń', '3213', '34d21dae5b3c45065ea2229c628ffe27.jpeg', '0.00', '2022-01-21 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ INSERT INTO `types` (`id_types`, `name`, `img_source`) VALUES
 (15, 'Muzyka', 'gitara.jpg'),
 (16, 'Gry', 'gra.jpg'),
 (17, 'Sport', 'pilka.jpg'),
-(18, 'Moda', 'moda.png')ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(18, 'Moda', 'moda.png');
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE `workers` (
 --
 
 INSERT INTO `workers` (`id_workers`, `name`, `lastName`, `email`, `password`, `phone_number`) VALUES
-(1, 'ADMIN', 'ADMIN', 'admin@test.pl', 'admin', '123123')ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(1, 'ADMIN', 'ADMIN', 'admin@test.pl', 'admin', '123123');
 
 --
 -- Indeksy dla zrzutów tabel
