@@ -154,8 +154,15 @@ router.get("/products/:id/", auth, async (req, res, next) => {
 
 router.get("/product/:id/", auth, async (req, res, next) => {
   const [products] = await db.getProductTC(req.params.id);
-  const product = products ? products[0] : {};
 
+  const product = products.find(
+    (product) => product.id_product == req.params.id
+  );
+
+  if (!product) {
+    res.status(404).send("Nie znaleziono takiego produktu");
+    return;
+  }
   res.render("product", { product, logged: !!req.user });
 });
 
