@@ -147,88 +147,13 @@ router.get("/adminShow", auth, onlyFor("admin"), async (req, res, next) => {
   res.render("adminShow", { product, logged: !!req.user, types, saving });
 });
 
-// router.post(
-//   "/adminShow",
-//   upload.single("img_src"),
-//   auth,
-//   async (req, res, next) => {
-//     const { id, id_types, title, description, price } = req.body;
-//     const id_clients = "" + req.user.id;
-//     const date_publishment = new Date().toISOString();
-
-//     // CHECK IF FILE
-//     if (!req.file) {
-//       res.status(500).send("No file upload");
-//     } else {
-//       //  CHECK IF PHOTO FORMAT
-//       if (!whitelist.includes(req.file.mimetype)) {
-//         res.status(500).send("ONLY JPG, JPEG, PNG FORMAT");
-//       } else {
-//         const img_src =
-//           req.file.filename + "." + req.file.mimetype.split("/")[1];
-//         fs.copyFileSync(tmpDir + req.file.filename, uploadDir + img_src);
-//         fs.unlinkSync(tmpDir + req.file.filename);
-//         // CHECK IF ADD OR EDIT
-
-//         //ADD
-//         if (!id) {
-//           try {
-//             await db.addPost(
-//               id_clients,
-//               id_types,
-//               title,
-//               description,
-//               img_src,
-//               price,
-//               date_publishment
-//             );
-//             res.redirect("/adminShow");
-//           } catch (error) {
-//             console.error(error);
-//             res.status(500).send("error");
-//           }
-//           console.log("ADD CORECTLY");
-//         }
-
-//         //EDIT
-//         else {
-//           try {
-//             await db.editPost(id_types, title, description, img_src, price);
-//             res.redirect("/adminShow");
-//           } catch (error) {
-//             console.error(error);
-//             res.status(500).send("error");
-//           }
-//           console.log("EDIT CORECTLY");
-//         }
-//       }
-//     }
-//   }
-// );
-
-// router.delete(
-//   "/adminShow/:id",
-//   auth,
-//   onlyFor("admin"),
-//   async (req, res, next) => {
-//     const { id } = req.params;
-//     try {
-//       await db.removePost(id);
-//       res.send("ok");
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).send("error");
-//     }
-//   }
-// );
-
 router.get("/products/:id/", auth, async (req, res, next) => {
   const [products] = await db.getPosts(req.params.id);
   res.render("products", { products, logged: !!req.user });
 });
 
 router.get("/product/:id/", auth, async (req, res, next) => {
-  const [products] = await db.getProductTC();
+  const [products] = await db.getProductTC(req.params.id);
   const product = products ? products[0] : {};
 
   res.render("product", { product, logged: !!req.user });
