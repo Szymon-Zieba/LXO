@@ -25,8 +25,8 @@ Steps to run projekt with docker
   Then go to localhost:3000
   
   USER
-    email: 123
-    password: szymon@gmail.com
+    email: szymon@gmail.com
+    password: 123
 
 If you want to see difference go to branch nad compare 2 branches with each other.
 https://github.com/Szymon-Zieba/LXO/compare/no-injection...injection
