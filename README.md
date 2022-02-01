@@ -23,6 +23,10 @@ Steps to run projekt with docker
     docker exec -i maria_db mysql -uroot -padmin mysql < mysql.sql
     
   Then go to localhost:3000
+  
+  USER
+    email: 123
+    password: szymon@gmail.com
 
 If you want to see difference go to branch nad compare 2 branches with each other.
 https://github.com/Szymon-Zieba/LXO/compare/no-injection...injection
